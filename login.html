@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - ระบบลงเวลาทำงาน</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background: #F5F6FA;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 15px;
+    }
+
+    .company-name {
+      font-size: 20px;
+      color: #007BFF;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .welcome-text {
+      font-size: 14px;
+      color: #6C757D;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      color: #6C757D;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .btn {
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #28A745;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .forgot-password {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #007BFF;
+      text-decoration: none;
+      display: block;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 480px) {
+      .login-container { padding: 20px; margin: 10px; }
+      .logo { width: 80px; }
+      .company-name { font-size: 18px; }
+      .welcome-text { font-size: 12px; }
+      .form-group label { font-size: 12px; }
+      .form-group input { font-size: 12px; padding: 6px; }
+      .btn { padding: 8px; font-size: 14px; }
+      .forgot-password { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <img src="https://via.placeholder.com/100" alt="Company Logo" class="logo">
+    <div class="company-name">บริษัท ตัวอย่าง จำกัด</div>
+    <div class="welcome-text">ยินดีต้อนรับเข้าสู่ระบบลงเวลาทำงาน</div>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">ชื่อผู้ใช้:</label>
+        <input type="text" id="username" name="username" placeholder="กรอกชื่อผู้ใช้" required>
+      </div>
+      <div class="form-group">
+        <label for="password">รหัสผ่าน:</label>
+        <input type="password" id="password" name="password" placeholder="กรอกรหัสผ่าน" required>
+      </div>
+      <button type="submit" class="btn">เข้าสู่ระบบ</button>
+      <a href="#" class="forgot-password">ลืมรหัสผ่าน?</a>
+    </form>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // เปลี่ยนเป็น URL จริง
+
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      if (!username || !password) {
+        alert('กรุณากรอกชื่อผู้ใช้และรหัสผ่าน!');
+        return;
+      }
+
+      const data = { action: 'login', username, password };
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem('loggedInUser', JSON.stringify({ username, role: data.role }));
+          window.location.href = 'dashboard.html';
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(error => alert('Error: ' + error.message));
+    });
+  </script>
+</body>
+</html>
