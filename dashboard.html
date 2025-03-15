@@ -5,261 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - ระบบลงเวลาทำงาน</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Arial', sans-serif;
-    }
-
-    body {
-      background: #F5F6FA;
-      color: #333;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-    }
-
-    .header {
-      background: #fff;
-      padding: 15px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .header .logo {
-      font-size: 20px;
-      color: #007BFF;
-      font-weight: bold;
-    }
-
-    .header .profile {
-      width: 30px;
-      height: 30px;
-      background: #007BFF;
-      border-radius: 50%;
-    }
-
-    .header .back-btn {
-      font-size: 24px;
-      color: #007BFF;
-      cursor: pointer;
-      display: none;
-    }
-
-    .header .back-btn.active {
-      display: block;
-    }
-
-    .main-content {
-      padding: 70px 15px 15px;
-      flex: 1;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      padding: 15px 0;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      transition: transform 0.2s;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card .icon {
-      font-size: 40px;
-      margin-bottom: 10px;
-      color: #007BFF;
-    }
-
-    .card h3 {
-      font-size: 16px;
-      color: #333;
-      margin-bottom: 5px;
-    }
-
-    .card p {
-      font-size: 12px;
-      color: #6C757D;
-    }
-
-    .content-section {
-      display: none;
-      background: #fff;
-      border-radius: 8px;
-      padding: 15px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-top: 15px;
-    }
-
-    .content-section.active {
-      display: block;
-    }
-
-    .content-section h3 {
-      font-size: 16px;
-      color: #007BFF;
-      margin-bottom: 10px;
-    }
-
-    .form-group {
-      margin-bottom: 10px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      color: #6C757D;
-      margin-bottom: 5px;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 6px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 12px;
-    }
-
-    .form-group textarea {
-      height: 60px;
-      resize: none;
-    }
-
-    .form-group input[type="file"] {
-      padding: 2px;
-    }
-
-    .btn {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 6px;
-      background: #28A745;
-      color: #fff;
-      font-size: 14px;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      width: 100%;
-    }
-
-    .btn:hover {
-      opacity: 0.9;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 12px;
-    }
-
-    th, td {
-      padding: 8px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-    }
-
-    th {
-      background: #007BFF;
-      color: #fff;
-    }
-
-    .status-pending { color: #FFC107; font-weight: bold; }
-    .status-approved { color: #28A745; font-weight: bold; }
-    .status-rejected { color: #DC3545; font-weight: bold; }
-
-    #checkin .map-placeholder {
-      height: 150px;
-      background: #E9ECEF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-      border-radius: 6px;
-    }
-
-    #checkin .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    #workHistory .summary-cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    #workHistory .summary-card {
-      background: #fff;
-      width: 100px;
-      padding: 8px;
-      border-radius: 6px;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    #workHistory .summary-card .value {
-      font-weight: bold;
-      color: #007BFF;
-      font-size: 12px;
-    }
-
-    #salary .download-btn {
-      padding: 4px 8px;
-      background: #28A745;
-      border-radius: 4px;
-      font-size: 10px;
-    }
-
-    @media (max-width: 768px) {
-      .dashboard-grid { grid-template-columns: 1fr; gap: 10px; }
-      .card { padding: 15px; }
-      .card .icon { font-size: 36px; }
-      .card h3 { font-size: 14px; }
-      .card p { font-size: 10px; }
-      .main-content { padding: 60px 10px 10px; }
-      table { display: block; overflow-x: auto; white-space: nowrap; }
-      th, td { min-width: 80px; padding: 6px; }
-      #workHistory .summary-card { width: 80px; padding: 6px; }
-    }
-
-    @media (max-width: 480px) {
-      .header { padding: 10px; }
-      .header .logo { font-size: 18px; }
-      .header .profile { width: 25px; height: 25px; }
-      .header .back-btn { font-size: 20px; }
-      .main-content { padding: 50px 5px 5px; }
-      .content-section { padding: 10px; }
-      .form-group label { font-size: 10px; }
-      .form-group input, .form-group select, .form-group textarea { font-size: 10px; padding: 4px; }
-      .btn { padding: 6px 10px; font-size: 12px; }
-      #checkin .map-placeholder { height: 120px; }
-      #workHistory .summary-card { width: 70px; padding: 4px; }
-      #salary .download-btn { font-size: 8px; padding: 3px 6px; }
-    }
+    /* [สไตล์ CSS เดิมเหมือนในคำตอบก่อนหน้า] */
   </style>
 </head>
 <body>
@@ -375,7 +121,6 @@
         <input type="file" id="otFile" accept=".pdf,.jpg,.png">
       </div>
       <button class="btn" onclick="submitOT()">ส่งคำขอ</button>
-      <!-- OT Data จะแสดงใน Work History -->
     </div>
 
     <div id="salary" class="content-section">
@@ -405,7 +150,6 @@
         <input type="text" id="holidayName" placeholder="เช่น วันสงกรานต์">
       </div>
       <button class="btn" onclick="addHoliday()">เพิ่มวันหยุด</button>
-      <!-- Holiday Data จะแสดงใน Work History -->
     </div>
   </div>
 
@@ -491,7 +235,7 @@
 
     function submitOT() {
       const data = {
-        action: 'submitOT', // ฟังก์ชันนี้ต้องเพิ่มใน Backend
+        action: 'submitOT',
         username: loggedInUser.username,
         date: document.getElementById('otDate').value,
         startTime: document.getElementById('otStartTime').value,
@@ -506,7 +250,7 @@
       .then(response => response.json())
       .then(data => {
         alert(data.message);
-        if (data.success) fetchData('checkin'); // OT อาจบันทึกใน CheckIn Sheet
+        if (data.success) fetchData('checkin');
       })
       .catch(error => alert('Error: ' + error.message));
     }
@@ -543,7 +287,7 @@
       .then(response => response.json())
       .then(data => {
         alert(data.message);
-        if (data.success) fetchData('checkin'); // อาจบันทึกใน Work History
+        if (data.success) fetchData('checkin');
       })
       .catch(error => alert('Error: ' + error.message));
     }
@@ -561,35 +305,322 @@
           display.innerHTML = '<tr>' + data.data[0].map(col => `<th>${col}</th>`).join('') + '</tr>' +
             data.data.slice(1).filter(row => row[0] === loggedInUser.username)
               .map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('');
-          
-          if (type === 'checkin') {
-            const summaryCards = document.getElementById('summaryCards');
-            summaryCards.innerHTML = ''; // ล้างข้อมูลเก่า
-            const summary = calculateSummary(data.data);
-            Object.entries(summary).forEach(([key, value]) => {
-              const card = document.createElement('div');
-              card.className = 'summary-card';
-              card.innerHTML = `<span>${key}</span><div class="value">${value}</div>`;
-              summaryCards.appendChild(card);
-            });
-          }
         }
       })
       .catch(error => alert('Error: ' + error.message));
     }
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - ระบบลงเวลาทำงาน</title>
+  <style>
+    /* [สไตล์ CSS เดิมเหมือนในคำตอบก่อนหน้า] */
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="back-btn" id="backBtn">⬅️</div>
+    <div class="logo">Logo</div>
+    <div class="profile"></div>
+  </div>
 
-    function calculateSummary(data) {
-      const summary = { 'ทำงานทั้งหมด': 0, 'สาย': 0, 'ออกก่อน': 0, 'OT': 0, 'ลา': 0 };
-      data.slice(1).forEach(row => {
-        if (row[0] === loggedInUser.username) {
-          if (row[2] === 'checkIn') summary['ทำงานทั้งหมด']++;
-          if (row[3] === 'late') summary['สาย']++;
-          if (row[3] === 'early') summary['ออกก่อน']++;
-          if (row[2] === 'OT') summary['OT'] += parseFloat(row[4] || 0);
-          if (row[2].includes('Leave')) summary['ลา']++;
-        }
+  <div class="main-content">
+    <div id="dashboard" class="content-section active">
+      <div class="dashboard-grid">
+        <div class="card" data-section="checkin">
+          <div class="icon">⏰</div>
+          <h3>Time Attendance</h3>
+          <p>ลงเวลาทำงาน</p>
+        </div>
+        <div class="card" data-section="workHistory">
+          <div class="icon">📅</div>
+          <h3>My Calendar</h3>
+          <p>Leave/Holiday Entry</p>
+        </div>
+        <div class="card" data-section="leaveRequest">
+          <div class="icon">🏖️</div>
+          <h3>My Leave</h3>
+          <p>Plan your vacation</p>
+        </div>
+        <div class="card" data-section="otRequest">
+          <div class="icon">⏱️</div>
+          <h3>My OT</h3>
+          <p>Don't work too hard</p>
+        </div>
+        <div class="card" data-section="salary">
+          <div class="icon">💵</div>
+          <h3>Money</h3>
+          <p>Check your salary</p>
+        </div>
+        <div class="card" data-section="settings">
+          <div class="icon">⚙️</div>
+          <h3>Settings</h3>
+          <p>Adjust your settings</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="checkin" class="content-section">
+      <h3>📍 Check-in</h3>
+      <div class="map-placeholder">แผนที่ GPS</div>
+      <div class="buttons">
+        <button class="btn" onclick="getLocationAndCheck('checkIn')">ยืนยันเช็คอิน</button>
+        <button class="btn" style="background: #007BFF;" onclick="getLocationAndCheck('checkOut')">เช็คเอาต์</button>
+      </div>
+    </div>
+
+    <div id="workHistory" class="content-section">
+      <h3>📆 My Calendar</h3>
+      <button class="btn" onclick="fetchData('checkin')">Refresh Data</button>
+      <table id="workHistoryTable"></table>
+      <div class="summary-cards" id="summaryCards"></div>
+    </div>
+
+    <div id="leaveRequest" class="content-section">
+      <h3>📋 My Leave</h3>
+      <div class="form-group">
+        <label>วันที่เริ่ม:</label>
+        <input type="date" id="startDate">
+      </div>
+      <div class="form-group">
+        <label>วันที่สิ้นสุด:</label>
+        <input type="date" id="endDate">
+      </div>
+      <div class="form-group">
+        <label>ประเภทการลา:</label>
+        <select id="leaveType">
+          <option value="ลาป่วย">ลาป่วย</option>
+          <option value="ลากิจ">ลากิจ</option>
+          <option value="ลาพักร้อน">ลาพักร้อน</option>
+        </select>
+      </div>
+      <div class="form-group" id="certificateGroup" style="display: none;">
+        <label>ใบรับรองแพทย์:</label>
+        <input type="file" id="certificate" accept=".pdf,.jpg,.png">
+      </div>
+      <div class="form-group">
+        <label>เหตุผล:</label>
+        <textarea id="reason" placeholder="กรุณาระบุเหตุผล"></textarea>
+      </div>
+      <button class="btn" onclick="submitLeave()">ส่งคำขอ</button>
+      <button class="btn" onclick="fetchData('leave')">Refresh Data</button>
+      <table id="leaveTable"></table>
+    </div>
+
+    <div id="otRequest" class="content-section">
+      <h3>⏰ My OT</h3>
+      <div class="form-group">
+        <label>วันที่:</label>
+        <input type="date" id="otDate">
+      </div>
+      <div class="form-group">
+        <label>เวลาเริ่ม:</label>
+        <input type="time" id="otStartTime">
+      </div>
+      <div class="form-group">
+        <label>เวลาสิ้นสุด:</label>
+        <input type="time" id="otEndTime">
+      </div>
+      <div class="form-group">
+        <label>เหตุผล:</label>
+        <textarea id="otReason" placeholder="กรุณาระบุเหตุผล"></textarea>
+      </div>
+      <div class="form-group">
+        <label>แนบเอกสาร:</label>
+        <input type="file" id="otFile" accept=".pdf,.jpg,.png">
+      </div>
+      <button class="btn" onclick="submitOT()">ส่งคำขอ</button>
+    </div>
+
+    <div id="salary" class="content-section">
+      <h3>💰 Salary</h3>
+      <button class="btn" onclick="fetchData('salary')">Refresh Data</button>
+      <table id="salaryTable"></table>
+    </div>
+
+    <div id="settings" class="content-section">
+      <h3>🔧 Settings</h3>
+      <div class="form-group">
+        <label>เวลาเริ่มงาน:</label>
+        <input type="time" id="workStart">
+      </div>
+      <div class="form-group">
+        <label>เวลาสิ้นสุด:</label>
+        <input type="time" id="workEnd">
+      </div>
+      <button class="btn" onclick="saveSettings()">บันทึก</button>
+      <h3 style="margin-top: 15px;">จัดการวันหยุด</h3>
+      <div class="form-group">
+        <label>วันที่:</label>
+        <input type="date" id="holidayDate">
+      </div>
+      <div class="form-group">
+        <label>ชื่อวันหยุด:</label>
+        <input type="text" id="holidayName" placeholder="เช่น วันสงกรานต์">
+      </div>
+      <button class="btn" onclick="addHoliday()">เพิ่มวันหยุด</button>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec'; // เปลี่ยนเป็น URL จริง
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!loggedInUser) window.location.href = 'login.html';
+      fetchData('checkin'); // โหลดข้อมูลเริ่มต้น
+    });
+
+    const cards = document.querySelectorAll('.card');
+    const sections = document.querySelectorAll('.content-section');
+    const backBtn = document.getElementById('backBtn');
+
+    function showSection(sectionId) {
+      sections.forEach(section => section.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+      backBtn.classList.toggle('active', sectionId !== 'dashboard');
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const sectionId = card.getAttribute('data-section');
+        showSection(sectionId);
       });
-      return summary;
+    });
+
+    backBtn.addEventListener('click', () => showSection('dashboard'));
+
+    document.getElementById('leaveType').addEventListener('change', (e) => {
+      document.getElementById('certificateGroup').style.display = e.target.value === 'ลาป่วย' ? 'block' : 'none';
+    });
+
+    function getLocationAndCheck(action) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const data = {
+            action: action,
+            username: loggedInUser.username,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          };
+          fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          })
+          .then(response => response.json())
+          .then(data => {
+            alert(data.message);
+            if (data.success) fetchData('checkin');
+          })
+          .catch(error => alert('Error: ' + error.message));
+        }, () => alert('Unable to get location'));
+      } else {
+        alert('Geolocation not supported');
+      }
+    }
+
+    function submitLeave() {
+      const data = {
+        action: 'submitLeave',
+        username: loggedInUser.username,
+        startDate: document.getElementById('startDate').value,
+        endDate: document.getElementById('endDate').value,
+        leaveType: document.getElementById('leaveType').value,
+        reason: document.getElementById('reason').value
+      };
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+        if (data.success) fetchData('leave');
+      })
+      .catch(error => alert('Error: ' + error.message));
+    }
+
+    function submitOT() {
+      const data = {
+        action: 'submitOT',
+        username: loggedInUser.username,
+        date: document.getElementById('otDate').value,
+        startTime: document.getElementById('otStartTime').value,
+        endTime: document.getElementById('otEndTime').value,
+        reason: document.getElementById('otReason').value
+      };
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+        if (data.success) fetchData('checkin');
+      })
+      .catch(error => alert('Error: ' + error.message));
+    }
+
+    function saveSettings() {
+      const data = {
+        action: 'saveSettings',
+        username: loggedInUser.username,
+        workStart: document.getElementById('workStart').value,
+        workEnd: document.getElementById('workEnd').value
+      };
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => alert(data.message))
+      .catch(error => alert('Error: ' + error.message));
+    }
+
+    function addHoliday() {
+      const data = {
+        action: 'addHoliday',
+        username: loggedInUser.username,
+        holidayDate: document.getElementById('holidayDate').value,
+        holidayName: document.getElementById('holidayName').value
+      };
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+        if (data.success) fetchData('checkin');
+      })
+      .catch(error => alert('Error: ' + error.message));
+    }
+
+    function fetchData(type) {
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'getData', type: type, username: loggedInUser.username })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const display = document.getElementById(type === 'checkin' ? 'workHistoryTable' : type === 'leave' ? 'leaveTable' : 'salaryTable');
+          display.innerHTML = '<tr>' + data.data[0].map(col => `<th>${col}</th>`).join('') + '</tr>' +
+            data.data.slice(1).filter(row => row[0] === loggedInUser.username)
+              .map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('');
+        }
+      })
+      .catch(error => alert('Error: ' + error.message));
     }
   </script>
 </body>
