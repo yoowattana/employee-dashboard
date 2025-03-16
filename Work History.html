@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Calendar - ระบบลงเวลาทำงาน</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="header">
+    <div class="back-btn" onclick="navigateTo('dashboard.html')">⬅️</div>
+    <div class="logo">Logo</div>
+    <div class="profile"></div>
+  </div>
+  <div class="main-content">
+    <h3>📆 My Calendar</h3>
+    <button class="btn" onclick="fetchData('checkin')">Refresh Data</button>
+    <table id="workHistoryTable"></table>
+  </div>
+  <script src="scripts.js"></script>
+  <script>
+    checkLogin();
+    fetchData('checkin');
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check-in - ระบบลงเวลาทำงาน</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="header">
+    <div class="back-btn" onclick="navigateTo('dashboard.html')">⬅️</div>
+    <div class="logo">Logo</div>
+    <div class="profile"></div>
+  </div>
+  <div class="main-content">
+    <h3>📍 Check-in</h3>
+    <div class="map-placeholder">แผนที่ GPS</div>
+    <div class="form-group">
+      <label>เลือกไซต์งาน (ถ้า GPS ล้มเหลว):</label>
+      <select id="siteSelect">
+        <option value="สำนักงานหลัก">สำนักงานหลัก</option>
+        <option value="ไซต์ก่อสร้าง A">ไซต์ก่อสร้าง A</option>
+        <option value="ไซต์ก่อสร้าง B">ไซต์ก่อสร้าง B</option>
+        <option value="โกดัง C">โกดัง C</option>
+        <option value="โรงงาน D">โรงงาน D</option>
+      </select>
+    </div>
+    <div class="buttons">
+      <button class="btn" onclick="getLocationAndCheck('checkIn')">ยืนยันเช็คอิน</button>
+      <button class="btn" style="background: #007BFF;" onclick="getLocationAndCheck('checkOut')">เช็คเอาต์</button>
+    </div>
+  </div>
+  <script src="scripts.js"></script>
+  <script>
+    checkLogin();
+  </script>
+</body>
+</html>

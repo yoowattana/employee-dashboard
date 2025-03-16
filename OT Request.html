@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My OT - ระบบลงเวลาทำงาน</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="header">
+    <div class="back-btn" onclick="navigateTo('dashboard.html')">⬅️</div>
+    <div class="logo">Logo</div>
+    <div class="profile"></div>
+  </div>
+  <div class="main-content">
+    <h3>⏰ My OT</h3>
+    <div class="form-group">
+      <label>วันที่:</label>
+      <input type="date" id="otDate">
+    </div>
+    <div class="form-group">
+      <label>เวลาเริ่ม:</label>
+      <input type="time" id="otStartTime">
+    </div>
+    <div class="form-group">
+      <label>เวลาสิ้นสุด:</label>
+      <input type="time" id="otEndTime">
+    </div>
+    <div class="form-group">
+      <label>เหตุผล:</label>
+      <textarea id="otReason" placeholder="กรุณาระบุเหตุผล"></textarea>
+    </div>
+    <div class="form-group">
+      <label>แนบเอกสาร:</label>
+      <input type="file" id="otFile" accept=".pdf,.jpg,.png">
+    </div>
+    <button class="btn" onclick="submitOT()">ส่งคำขอ</button>
+  </div>
+  <script src="scripts.js"></script>
+  <script>
+    checkLogin();
+  </script>
+</body>
+</html>

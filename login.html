@@ -4,13 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - ระบบลงเวลาทำงาน</title>
-  <style>
-    /* [สไตล์ CSS เดิมเหมือนในคำตอบก่อนหน้า] */
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="login-container">
-    <img src="https://via.placeholder.com/100" alt="Company Logo" class="logo">
+    <img src="https://via.placeholder.com/100" alt="Company Logo" class="logo-img">
     <div class="company-name">บริษัท ตัวอย่าง จำกัด</div>
     <div class="welcome-text">ยินดีต้อนรับเข้าสู่ระบบลงเวลาทำงาน</div>
     <form id="loginForm">
@@ -26,37 +24,11 @@
       <a href="#" class="forgot-password">ลืมรหัสผ่าน?</a>
     </form>
   </div>
-
+  <script src="scripts.js"></script>
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwExyD6BUFtvzbglDIogGhXblFre60RSW--bJyrSEQyio6jf5o0mhBI-nmc6KbJ1Y6bHA/exec'; // เปลี่ยนเป็น URL จริง
-
-    const loginForm = document.getElementById('loginForm');
-    loginForm.addEventListener('submit', (e) => {
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      if (!username || !password) {
-        alert('กรุณากรอกชื่อผู้ใช้และรหัสผ่าน!');
-        return;
-      }
-
-      const data = { action: 'login', username, password };
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          localStorage.setItem('loggedInUser', JSON.stringify({ username, role: data.role }));
-          window.location.href = 'dashboard.html';
-        } else {
-          alert(data.message);
-        }
-      })
-      .catch(error => alert('Error: ' + error.message));
+      handleLogin();
     });
   </script>
 </body>
